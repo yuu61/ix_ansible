@@ -1,0 +1,36 @@
+plugins/action/ix.py action-plugin-docs # base class for the module action plugins, like cisco.ios
+plugins/module_utils/network/ix/config/device_interfaces/device_interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/config/interfaces/interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/config/l3_interfaces/l3_interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/config/ospf_interfaces/ospf_interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/config/ospfv2/ospfv2.py pylint:unused-import
+plugins/module_utils/network/ix/config/ospfv3/ospfv3.py pylint:unused-import
+plugins/module_utils/network/ix/facts/device_interfaces/device_interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/facts/facts.py pylint:unused-import
+plugins/module_utils/network/ix/facts/interfaces/interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/facts/ospf_interfaces/ospf_interfaces.py pylint:unused-import
+plugins/module_utils/network/ix/facts/ospfv2/ospfv2.py pylint:unused-import
+plugins/module_utils/network/ix/facts/ospfv3/ospfv3.py pylint:unused-import
+plugins/module_utils/network/ix/facts/static_routes/static_routes.py pylint:unused-import
+plugins/module_utils/network/ix/ix.py pylint:unused-import
+plugins/module_utils/network/ix/utils/utils.py pylint:unused-import
+plugins/modules/ix_command.py validate-modules:invalid-ansiblemodule-schema # alias typo, fixed by #33
+plugins/modules/ix_device_interfaces.py validate-modules:doc-choices-incompatible-type
+plugins/modules/ix_device_interfaces.py validate-modules:doc-default-does-not-match-spec
+plugins/modules/ix_device_interfaces.py validate-modules:doc-elements-mismatch
+plugins/modules/ix_device_interfaces.py validate-modules:nonexistent-parameter-documented
+plugins/modules/ix_device_interfaces.py validate-modules:parameter-type-not-in-doc
+plugins/modules/ix_device_interfaces.py validate-modules:return-syntax-error
+plugins/modules/ix_device_interfaces.py validate-modules:undocumented-parameter
+plugins/modules/ix_facts.py validate-modules:doc-choices-do-not-match-spec
+plugins/modules/ix_facts.py validate-modules:doc-default-does-not-match-spec
+plugins/modules/ix_facts.py validate-modules:option-invalid-version-added
+plugins/modules/ix_facts.py validate-modules:parameter-list-no-elements
+plugins/modules/ix_facts.py validate-modules:parameter-type-not-in-doc
+plugins/modules/ix_interfaces.py validate-modules:invalid-ansiblemodule-schema
+plugins/modules/ix_interfaces.py validate-modules:invalid-documentation
+plugins/modules/ix_interfaces.py validate-modules:return-syntax-error
+plugins/modules/ix_l3_interfaces.py validate-modules:parameter-type-not-in-doc
+plugins/modules/ix_l3_interfaces.py validate-modules:undocumented-parameter
+plugins/modules/ix_ospf_interfaces.py validate-modules:invalid-documentation
+tests/integration/test_ix_integration.py pylint:unused-import

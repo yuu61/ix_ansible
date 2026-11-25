@@ -1,0 +1,65 @@
+---
+name: Tests
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sanity:
+    name: Sanity (ansible-core ${{ matrix.ansible-core }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        # ansible-core versions still in support. Each one needs
+        # ansible_collections/rucdev/ix/tests/sanity/ignore-<version>.txt.
+        ansible-core: ["2.20", "2.21"]
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install ansible-core
+        env:
+          ANSIBLE_CORE_VERSION: ${{ matrix.ansible-core }}
+        run: python -m pip install "ansible-core~=${ANSIBLE_CORE_VERSION}.0"
+
+      # Installs into ./ansible_collections/ansible/, which .gitignore already excludes.
+      - name: Install collection dependencies
+        run: ansible-galaxy collection install -p . ansible.netcommon
+
+      - name: Run sanity tests
+        working-directory: ansible_collections/rucdev/ix
+        run: ansible-test sanity --docker default --color yes
+
+  units:
+    name: Units
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@v10.4.0
+
+      # Same environment as local development: the versions pinned in pyproject.toml.
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run unit tests
+        run: uv run python -m pytest ansible_collections/rucdev/ix/tests/unit
