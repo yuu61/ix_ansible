@@ -52,7 +52,6 @@ options:
           authentication_key:
             description: Sets the password if encryption is not used.
             type: str
-            no_log: true
           cost:
             description: Sets the value of cost on the interface.(1~65535)
             type: int
@@ -72,7 +71,6 @@ options:
               password:
                 description: md5 password
                 type: str
-                no_log: true
           mtu_ignore:
             description: Ignore MTU mismatch
             type: bool
