@@ -23,6 +23,16 @@ jobs:
       - name: "ruff"
         run: "uvx ruff@0.17.6 check --ignore-noqa ."
 
+      # Exceptions belong in the configuration files with a reason, so the code
+      # must not carry inline suppression comments for any tool.
+      - name: "No inline suppression comments"
+        run: |
+          pattern='#[[:space:]]*(noqa|pylint:[[:space:]]*disable|type:[[:space:]]*ignore'
+          pattern="${pattern}|fmt:[[:space:]]*(off|on|skip)|yamllint[[:space:]]+disable|nosec)"
+          if git grep -nE "${pattern}"; then
+            exit 1
+          fi
+
       - name: "yamllint"
         run: "uvx yamllint@1.38.0 --strict ."
 
