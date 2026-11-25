@@ -3,7 +3,7 @@
 
 import json
 
-from os import path
+from pathlib import Path
 
 try:
     from unittest.mock import MagicMock
@@ -12,24 +12,19 @@ except ImportError:
 
 from unittest import TestCase
 
-from ansible.module_utils._text import to_bytes
+from ansible.module_utils._text import to_text
 
 from ansible_collections.rucdev.ix.plugins.cliconf import ix
 
-b_FIXTURE_DIR = b"%s/fixtures/ix" % (
-    to_bytes(path.dirname(path.abspath(__file__)), errors="surrogate_or_strict")
-)
+FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "ix"
 
 
 def _connection_side_effect(*args, **kwargs):
     try:
         value = args[0] if args else kwargs.get("command")
 
-        fixture_path = path.abspath(
-            b"%s/%s" % (b_FIXTURE_DIR, b"_".join(value.split(b" "))),
-        )
-        with open(fixture_path, "rb") as file_desc:
-            return file_desc.read()
+        name = to_text(b"_".join(value.split(b" ")), errors="surrogate_or_strict")
+        return (FIXTURE_DIR / name).read_bytes()
     except OSError:
         if args:
             return args[0]
